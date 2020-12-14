@@ -12,9 +12,8 @@ const dummyData = [
 
 const B = () => {
   const [listData, setListData] = useState(dummyData);
-  const [, forceUpdate] = useState(0);
 
-  const renderView = ({item}) => {
+  const renderView = ({item, index}) => {
     const {title, selected} = item;
 
     const selectedViewColor = selected ? 'pink' : 'gray';
@@ -24,8 +23,9 @@ const B = () => {
         <View>
           <TouchableOpacity
             onPress={() => {
-              item.selected = !selected;
-              forceUpdate((n) => !n);
+              const copyList = [...listData];
+              copyList[index] = {...item, selected: !selected}; //this line use spread syntax, but you can use Object.assign() instead of it.
+              setListData(copyList);
             }}
             style={{height: 60, width: '100%'}}>
             <Text>{title}</Text>
